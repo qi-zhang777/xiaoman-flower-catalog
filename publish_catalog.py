@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import json
 import os
 import shutil
 import subprocess
 import sys
 import time
+import urllib.request
 import webbrowser
 from datetime import datetime
 from pathlib import Path
@@ -127,6 +129,34 @@ def commit_and_push() -> bool:
     return True
 
 
+def wait_for_public_update(timeout_seconds: int = 150) -> bool:
+    with (ROOT / "catalog.json").open("r", encoding="utf-8") as handle:
+        expected_updated_at = json.load(handle).get("updatedAt")
+    print("正在等待公网网站刷新，请不要关闭这个窗口……")
+    deadline = time.monotonic() + timeout_seconds
+    attempts = 0
+    while time.monotonic() < deadline:
+        attempts += 1
+        url = PUBLIC_URL + f"catalog.json?v={int(time.time() * 1000)}"
+        try:
+            request = urllib.request.Request(
+                url,
+                headers={"Cache-Control": "no-cache", "Pragma": "no-cache"},
+            )
+            with urllib.request.urlopen(request, timeout=15) as response:
+                public_catalog = json.loads(response.read().decode("utf-8"))
+            if public_catalog.get("updatedAt") == expected_updated_at:
+                print("公网网站已确认更新完成。")
+                return True
+        except Exception:  # noqa: BLE001
+            pass
+        if attempts % 4 == 0:
+            print("仍在等待 GitHub Pages 构建……")
+        time.sleep(5)
+    print("公网构建时间较长，稍后刷新页面即可看到新版。")
+    return False
+
+
 def main() -> int:
     try:
         print("=== 小满 flower 一键发布 ===")
@@ -135,9 +165,9 @@ def main() -> int:
         copy_site_files()
         changed = commit_and_push()
         if changed:
-            print("\n发布成功！GitHub Pages 通常会在 1 分钟内更新。")
+            print("\n文件推送成功！")
             print(PUBLIC_URL)
-            time.sleep(3)
+            wait_for_public_update()
         webbrowser.open(PUBLIC_URL + f"?v={int(time.time())}")
         return 0
     except FileNotFoundError:
