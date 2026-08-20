@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "updatedAt": "2026-08-20T13:33:02.017105+00:00",
+  "bouquets": [
+    {
+      "id": "demo-1",
+      "name": "雾粉清晨",
+      "subtitle": "低饱和粉调示例款",
+      "price": 268,
+      "priceType": "from",
+      "maxPrice": null,
+      "tags": [
+        "示例",
+        "温柔",
+        "生日"
+      ],
+      "description": "这是一条示例资料。你可以在电脑管理模式中替换照片和文字，也可以直接删除。",
+      "image": "",
+      "visible": true,
+      "sample": true,
+      "createdAt": 1787212800001
+    },
+    {
+      "id": "demo-2",
+      "name": "绿野慢信",
+      "subtitle": "自然枝叶感示例款",
+      "price": 398,
+      "priceType": "fixed",
+      "maxPrice": null,
+      "tags": [
+        "示例",
+        "自然",
+        "纪念日"
+      ],
+      "description": "先把旧花束陆续上传进来，再通过隐藏和删除慢慢收拢风格。",
+      "image": "",
+      "visible": true,
+      "sample": true,
+      "createdAt": 1787212800002
+    },
+    {
+      "id": "demo-3",
+      "name": "暗红回声",
+      "subtitle": "浓郁复古感示例款",
+      "price": 520,
+      "priceType": "range",
+      "maxPrice": 688,
+      "tags": [
+        "示例",
+        "复古",
+        "高阶定制"
+      ],
+      "description": "价格可以显示为固定价、起价、区间或到店咨询，适合尚在调整中的定价方式。",
+      "image": "",
+      "visible": true,
+      "sample": true,
+      "createdAt": 1787212800003
+    }
+  ]
+}
+
