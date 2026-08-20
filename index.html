@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="小满 flower 花束图册" />
+  <title>小满 flower｜花束图册</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23667866'/%3E%3Cpath d='M32 49V27m0 7c-8 0-13-4-13-10 7-1 12 2 13 10Zm0-4c7-1 11-5 11-11-7 0-11 4-11 11Z' fill='none' stroke='%23faf8f2' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="paper-grain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="回到顶部">
+      <span class="brand-mark">小满</span>
+      <span class="brand-en">FLOWER ARCHIVE</span>
+    </a>
+    <nav class="header-actions">
+      <button class="text-button" id="aboutButton" type="button">关于图册</button>
+      <button class="manage-button hidden" id="manageButton" type="button">
+        <span class="manage-dot"></span>
+        管理图册
+      </button>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-kicker">XIAOMAN · CHONGQING</div>
+      <h1>花会慢慢长成<br /><em>你喜欢的样子。</em></h1>
+      <p>这里不急着定义风格。留下此刻喜欢的花束，<br class="desktop-only" />也允许自己随时改变主意。</p>
+      <div class="hero-meta">
+        <span id="bouquetCount">0 款花束</span>
+        <span class="meta-line"></span>
+        <span>持续更新</span>
+      </div>
+    </section>
+
+    <section class="catalog-section" aria-labelledby="catalogTitle">
+      <div class="catalog-heading">
+        <div>
+          <p class="section-number">01 / THE COLLECTION</p>
+          <h2 id="catalogTitle">花束图册</h2>
+        </div>
+        <label class="search-box">
+          <span aria-hidden="true">⌕</span>
+          <input id="searchInput" type="search" placeholder="找颜色、花材或场合" autocomplete="off" />
+        </label>
+      </div>
+
+      <div class="filters" id="filters" aria-label="筛选花束">
+        <button class="filter-chip active" data-filter="all" type="button">全部</button>
+        <button class="filter-chip" data-filter="under200" type="button">¥200 以下</button>
+        <button class="filter-chip" data-filter="200to399" type="button">¥200–399</button>
+        <button class="filter-chip" data-filter="over400" type="button">¥400 以上</button>
+        <button class="filter-chip" data-filter="favorite" type="button">我的喜欢</button>
+      </div>
+
+      <div class="catalog-grid" id="catalogGrid"></div>
+
+      <div class="empty-state hidden" id="emptyState">
+        <div class="empty-stem" aria-hidden="true">⌇</div>
+        <h3>这里还没有花束</h3>
+        <p id="emptyMessage">换一个筛选条件试试。</p>
+        <button class="primary-button hidden" id="emptyAddButton" type="button">添加第一束花</button>
+      </div>
+    </section>
+
+    <section class="philosophy">
+      <p class="section-number">02 / A SMALL NOTE</p>
+      <div class="philosophy-grid">
+        <h2>不复制热闹，<br />只保留心动。</h2>
+        <div>
+          <p>花材会随季节变化，每一束也会保留手作的自然差异。图册价格用于帮助你挑选预算，最终以当日花材与沟通为准。</p>
+          <a href="#top" class="inline-link">回到图册 <span>↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 小满 flower</span>
+    <span>Made for flowers in progress</span>
+  </footer>
+
+  <aside class="admin-bar hidden" id="adminBar" aria-label="图册管理工具">
+    <div class="admin-status"><span></span> 管理模式</div>
+    <div class="admin-actions">
+      <button id="importButton" type="button">导入备份</button>
+      <button id="exportButton" type="button">导出备份</button>
+      <button class="primary-small" id="addButton" type="button">＋ 添加花束</button>
+      <button id="exitManageButton" type="button">完成</button>
+    </div>
+    <input class="visually-hidden" id="importInput" type="file" accept="application/json" />
+  </aside>
+
+  <dialog class="modal" id="editorDialog">
+    <form class="editor-form" id="editorForm" method="dialog">
+      <div class="modal-header">
+        <div>
+          <p class="section-number">CATALOG EDITOR</p>
+          <h2 id="editorTitle">添加花束</h2>
+        </div>
+        <button class="icon-button" type="button" data-close="editorDialog" aria-label="关闭">×</button>
+      </div>
+
+      <div class="editor-layout">
+        <label class="image-uploader" id="imageUploader">
+          <input id="imageInput" type="file" accept="image/*" />
+          <img class="hidden" id="imagePreview" alt="花束图片预览" />
+          <span class="upload-placeholder" id="uploadPlaceholder">
+            <b>＋ 上传花束照片</b>
+            <small>建议竖图，系统会自动压缩</small>
+          </span>
+        </label>
+
+        <div class="form-fields">
+          <input id="itemId" type="hidden" />
+          <label>
+            <span>花束名字</span>
+            <input id="nameInput" name="name" required maxlength="24" placeholder="例如：晚霞来信" />
+          </label>
+          <label>
+            <span>一句话介绍</span>
+            <input id="subtitleInput" name="subtitle" maxlength="40" placeholder="例如：奶油粉与一点日落橘" />
+          </label>
+          <div class="two-columns">
+            <label>
+              <span>价格（元）</span>
+              <input id="priceInput" name="price" required type="number" min="0" max="99999" placeholder="299" />
+            </label>
+            <label>
+              <span>价格显示</span>
+              <select id="priceTypeInput" name="priceType">
+                <option value="fixed">固定价格</option>
+                <option value="from">起价</option>
+                <option value="range">价格区间</option>
+                <option value="ask">到店咨询</option>
+              </select>
+            </label>
+          </div>
+          <label id="maxPriceField" class="hidden">
+            <span>最高价格（元）</span>
+            <input id="maxPriceInput" name="maxPrice" type="number" min="0" max="99999" placeholder="399" />
+          </label>
+          <label>
+            <span>标签</span>
+            <input id="tagsInput" name="tags" maxlength="60" placeholder="生日, 奶油色, 玫瑰（用逗号隔开）" />
+          </label>
+          <label>
+            <span>详细说明</span>
+            <textarea id="descriptionInput" name="description" rows="4" maxlength="180" placeholder="花材、尺寸、适合的场合……"></textarea>
+          </label>
+          <label class="switch-row">
+            <span>
+              <b>在顾客图册中展示</b>
+              <small>关闭后保留资料，但顾客看不到</small>
+            </span>
+            <input id="visibleInput" type="checkbox" checked />
+            <i aria-hidden="true"></i>
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="secondary-button" type="button" data-close="editorDialog">取消</button>
+        <button class="primary-button" type="submit">保存花束</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal detail-modal" id="detailDialog">
+    <article id="detailContent"></article>
+  </dialog>
+
+  <dialog class="modal compact-modal" id="aboutDialog">
+    <div class="about-content">
+      <button class="icon-button modal-close" type="button" data-close="aboutDialog" aria-label="关闭">×</button>
+      <p class="section-number">ABOUT THIS ARCHIVE</p>
+      <h2>这是一本可以反复修改的花束图册。</h2>
+      <p>现在先把做过的款式放进来。喜欢的留下，不再代表你的风格的就隐藏或删除。等方向稳定以后，再考虑下单、配送和会员这些功能。</p>
+      <p class="about-tip" id="aboutTip">顾客打开公开网址时只会看到图册。店主在自己的电脑上启动编辑工具后，才会显示“管理图册”入口。</p>
+      <button class="primary-button" type="button" data-close="aboutDialog">我知道了</button>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
+
