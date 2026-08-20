@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-20T13:56:41.554588+00:00",
+  "updatedAt": "2026-08-20T14:06:41.580851+00:00",
   "bouquets": [
     {
       "id": "bouquet-1787234023416-78f00ad4d5c428",
       "name": "红玫瑰",
-      "subtitle": "",
+      "subtitle": "红色",
       "price": 299,
-      "priceType": "fixed",
+      "priceType": "ask",
       "maxPrice": null,
       "tags": [],
       "description": "",
@@ -15,52 +15,52 @@
       "visible": true,
       "sample": false,
       "createdAt": 1787234023416,
-      "updatedAt": 1787234023416
+      "updatedAt": 1787234801577
     },
     {
       "id": "bouquet-1787234083817-e563593f7cad4",
       "name": "仙子之吻",
-      "subtitle": "",
+      "subtitle": "粉色",
       "price": 269,
-      "priceType": "fixed",
-      "maxPrice": null,
+      "priceType": "range",
+      "maxPrice": 369,
       "tags": [],
       "description": "",
       "image": "assets/bouquets/bouquet-1787234083817-e563593f7cad4.jpg",
       "visible": true,
       "sample": false,
       "createdAt": 1787234083818,
-      "updatedAt": 1787234083818
+      "updatedAt": 1787234787545
     },
     {
       "id": "bouquet-1787234153995-d700742487952",
       "name": "蕾丝百合",
-      "subtitle": "",
-      "price": 399,
-      "priceType": "fixed",
-      "maxPrice": null,
+      "subtitle": "白色",
+      "price": 299,
+      "priceType": "range",
+      "maxPrice": 0,
       "tags": [],
       "description": "",
       "image": "assets/bouquets/bouquet-1787234153995-d700742487952.jpg",
       "visible": true,
       "sample": false,
       "createdAt": 1787234153995,
-      "updatedAt": 1787234153995
+      "updatedAt": 1787234775345
     },
     {
       "id": "bouquet-1787234201547-0fdb5525bb409",
       "name": "凯瑟琳",
-      "subtitle": "",
+      "subtitle": "奶油粉",
       "price": 199,
-      "priceType": "fixed",
-      "maxPrice": null,
+      "priceType": "range",
+      "maxPrice": 269,
       "tags": [],
       "description": "",
       "image": "assets/bouquets/bouquet-1787234201547-0fdb5525bb409.jpg",
       "visible": true,
       "sample": false,
       "createdAt": 1787234201547,
-      "updatedAt": 1787234201547
+      "updatedAt": 1787234758504
     }
   ]
 }
