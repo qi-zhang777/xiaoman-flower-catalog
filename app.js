@@ -407,4 +407,3 @@ initializeData().catch(() => {
   render();
   showToast("图册数据读取失败，正在显示示例内容");
 });
-

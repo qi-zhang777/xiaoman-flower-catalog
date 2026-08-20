@@ -1,61 +1,66 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-20T13:33:02.017105+00:00",
+  "updatedAt": "2026-08-20T13:56:41.554588+00:00",
   "bouquets": [
     {
-      "id": "demo-1",
-      "name": "雾粉清晨",
-      "subtitle": "低饱和粉调示例款",
-      "price": 268,
-      "priceType": "from",
-      "maxPrice": null,
-      "tags": [
-        "示例",
-        "温柔",
-        "生日"
-      ],
-      "description": "这是一条示例资料。你可以在电脑管理模式中替换照片和文字，也可以直接删除。",
-      "image": "",
-      "visible": true,
-      "sample": true,
-      "createdAt": 1787212800001
-    },
-    {
-      "id": "demo-2",
-      "name": "绿野慢信",
-      "subtitle": "自然枝叶感示例款",
-      "price": 398,
+      "id": "bouquet-1787234023416-78f00ad4d5c428",
+      "name": "红玫瑰",
+      "subtitle": "",
+      "price": 299,
       "priceType": "fixed",
       "maxPrice": null,
-      "tags": [
-        "示例",
-        "自然",
-        "纪念日"
-      ],
-      "description": "先把旧花束陆续上传进来，再通过隐藏和删除慢慢收拢风格。",
-      "image": "",
+      "tags": [],
+      "description": "",
+      "image": "assets/bouquets/bouquet-1787234023416-78f00ad4d5c428.jpg",
       "visible": true,
-      "sample": true,
-      "createdAt": 1787212800002
+      "sample": false,
+      "createdAt": 1787234023416,
+      "updatedAt": 1787234023416
     },
     {
-      "id": "demo-3",
-      "name": "暗红回声",
-      "subtitle": "浓郁复古感示例款",
-      "price": 520,
-      "priceType": "range",
-      "maxPrice": 688,
-      "tags": [
-        "示例",
-        "复古",
-        "高阶定制"
-      ],
-      "description": "价格可以显示为固定价、起价、区间或到店咨询，适合尚在调整中的定价方式。",
-      "image": "",
+      "id": "bouquet-1787234083817-e563593f7cad4",
+      "name": "仙子之吻",
+      "subtitle": "",
+      "price": 269,
+      "priceType": "fixed",
+      "maxPrice": null,
+      "tags": [],
+      "description": "",
+      "image": "assets/bouquets/bouquet-1787234083817-e563593f7cad4.jpg",
       "visible": true,
-      "sample": true,
-      "createdAt": 1787212800003
+      "sample": false,
+      "createdAt": 1787234083818,
+      "updatedAt": 1787234083818
+    },
+    {
+      "id": "bouquet-1787234153995-d700742487952",
+      "name": "蕾丝百合",
+      "subtitle": "",
+      "price": 399,
+      "priceType": "fixed",
+      "maxPrice": null,
+      "tags": [],
+      "description": "",
+      "image": "assets/bouquets/bouquet-1787234153995-d700742487952.jpg",
+      "visible": true,
+      "sample": false,
+      "createdAt": 1787234153995,
+      "updatedAt": 1787234153995
+    },
+    {
+      "id": "bouquet-1787234201547-0fdb5525bb409",
+      "name": "凯瑟琳",
+      "subtitle": "",
+      "price": 199,
+      "priceType": "fixed",
+      "maxPrice": null,
+      "tags": [],
+      "description": "",
+      "image": "assets/bouquets/bouquet-1787234201547-0fdb5525bb409.jpg",
+      "visible": true,
+      "sample": false,
+      "createdAt": 1787234201547,
+      "updatedAt": 1787234201547
     }
   ]
 }
-
