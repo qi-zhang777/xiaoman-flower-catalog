@@ -116,9 +116,10 @@ function priceLabel(item) {
 function filteredBouquets() {
   return state.bouquets.filter((item) => {
     if (!state.isManaging && !item.visible) return false;
-    if (state.activeFilter === "under200" && item.price >= 200) return false;
-    if (state.activeFilter === "200to399" && (item.price < 200 || item.price >= 400)) return false;
-    if (state.activeFilter === "over400" && item.price < 400) return false;
+    const hasKnownPrice = item.priceType !== "ask";
+    if (state.activeFilter === "under200" && (!hasKnownPrice || item.price >= 200)) return false;
+    if (state.activeFilter === "200to399" && (!hasKnownPrice || item.price < 200 || item.price >= 400)) return false;
+    if (state.activeFilter === "over400" && (!hasKnownPrice || item.price < 400)) return false;
     if (state.activeFilter === "favorite" && !state.favorites.has(item.id)) return false;
     const haystack = [item.name, item.subtitle, item.description, ...(item.tags || [])].join(" ").toLowerCase();
     return haystack.includes(state.search.toLowerCase().trim());
