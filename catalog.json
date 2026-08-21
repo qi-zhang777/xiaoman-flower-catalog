@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-21T12:04:37.717187+08:00",
+  "updatedAt": "2026-08-21T13:23:35.660+08:00",
   "bouquets": [
     {
       "id": "collection-001",
@@ -102,7 +102,7 @@
         "七夕花束"
       ],
       "description": "公主的骑士。以仙子之吻为主要视觉，整体呈现自然协调的气质，适合七夕。鲜花会随季节与到货状态做同风格替换，保留整体色系和氛围。",
-      "image": "assets/bouquets/bouquet-1787234083817-e563593f7cad4.jpg",
+      "image": "assets/bouquets/bouquet-1787234083817-e563593f7cad4-hd.png",
       "visible": true,
       "sample": false,
       "sourceWork": "No. 005",
@@ -147,7 +147,7 @@
         "创意花束"
       ],
       "description": "蕾丝百合。以蕾丝百合、百合为主要视觉，整体呈现小众的气质，适合生日、纪念日或日常表达心意。鲜花会随季节与到货状态做同风格替换，保留整体色系和氛围。",
-      "image": "assets/bouquets/bouquet-1787234153995-d700742487952.jpg",
+      "image": "assets/bouquets/bouquet-1787234153995-d700742487952-hd.png",
       "visible": true,
       "sample": false,
       "sourceWork": "No. 007",
@@ -646,7 +646,7 @@
         "粉色系花束"
       ],
       "description": "笨蛋 我当然永远站在你这边-凯瑟琳玫瑰。以粉色、凯瑟琳玫瑰、玫瑰为主要视觉，整体呈现自然协调的气质，适合生日。鲜花会随季节与到货状态做同风格替换，保留整体色系和氛围。",
-      "image": "assets/bouquets/bouquet-1787234201547-0fdb5525bb409.jpg",
+      "image": "assets/bouquets/bouquet-1787234201547-0fdb5525bb409-hd-v2.png",
       "visible": true,
       "sample": false,
       "sourceWork": "No. 029",
