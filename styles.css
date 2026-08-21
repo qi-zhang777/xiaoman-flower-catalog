@@ -95,10 +95,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 
 .hero-cover {
   width: 100%;
-  height: calc(100svh - 102px);
-  min-height: 720px;
-  max-height: 980px;
-  padding: 30px 24px;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  padding: 42px 24px 56px;
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -107,8 +107,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .hero-cover::before, .hero-cover::after { content: none; }
 .hero-cover-link {
   display: flex;
-  width: min(1860px, calc(100% - 80px));
-  height: auto;
+  width: auto;
+  height: clamp(480px, 58svh, 620px);
+  max-width: calc(100% - 80px);
   aspect-ratio: 1.893 / 1;
   overflow: hidden;
   line-height: 0;
@@ -279,6 +280,7 @@ footer { background: var(--ink); color: rgba(255,255,255,.56); min-height: 120px
   .hero-cover-link {
     display: block;
     width: 100%;
+    max-width: none;
     height: auto;
     aspect-ratio: auto;
     overflow: visible;
