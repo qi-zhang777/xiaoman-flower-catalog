@@ -245,11 +245,11 @@ footer { background: var(--ink); color: rgba(255,255,255,.56); min-height: 120px
   .visibility-badge, .sample-badge { left: 5px; top: 5px; padding: 3px 5px; font-size: 8px; }
   .card-body { padding-top: 8px; }
   .card-copy h3 {
-    min-height: 2.6em;
+    min-height: 3.9em;
     font-size: 13px;
     line-height: 1.3;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
