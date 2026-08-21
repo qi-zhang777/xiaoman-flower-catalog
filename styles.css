@@ -238,9 +238,25 @@ footer { background: var(--ink); color: rgba(255,255,255,.56); min-height: 120px
   .desktop-only { display: none; }
   .hero { min-height: 500px; padding-top: 82px; }
   .hero > p { font-size: 14px; }
-  .catalog-grid { grid-template-columns: 1fr; gap: 50px; }
-  .card-image-wrap { aspect-ratio: 4/4.9; }
-  .catalog-heading h2 { font-size: 40px; }
+  .catalog-section { padding-left: 12px; padding-right: 12px; }
+  .catalog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px 8px; }
+  .card-image-wrap { aspect-ratio: 4/5; }
+  .favorite-button { width: 27px; height: 27px; right: 5px; top: 5px; font-size: 14px; }
+  .visibility-badge, .sample-badge { left: 5px; top: 5px; padding: 3px 5px; font-size: 8px; }
+  .card-body { padding-top: 8px; }
+  .card-copy h3 {
+    min-height: 2.6em;
+    font-size: 13px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card-copy p, .card-tags { display: none; }
+  .card-price { margin-top: 4px; font-size: 11px; line-height: 1.3; white-space: normal; }
+  .catalog-heading h2 { font-size: 38px; }
+  .filters { margin-right: -12px; }
   footer { align-items: flex-start; flex-direction: column; justify-content: center; gap: 4px; }
   .admin-bar { bottom: 8px; display: block; }
   .admin-status { display: none; }
