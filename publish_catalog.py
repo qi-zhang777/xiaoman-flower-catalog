@@ -1,4 +1,4 @@
-"""将电脑上的小满 flower 图册一键发布到 GitHub Pages。"""
+"""将电脑上的小满 flower 图册一键发布到腾讯云，并同步 GitHub 备份。"""
 
 from __future__ import annotations
 
@@ -16,9 +16,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 REMOTE_URL = "https://github.com/qi-zhang777/xiaoman-flower-catalog.git"
-PUBLIC_URL = "https://qi-zhang777.github.io/xiaoman-flower-catalog/"
+GITHUB_PUBLIC_URL = "https://qi-zhang777.github.io/xiaoman-flower-catalog/"
+CLOUDBASE_ENV_ID = "xiaoman-flower-catalog-d97e9ead0"
+CLOUDBASE_PUBLIC_URL = (
+    "https://xiaoman-flower-catalog-d97e9ead0-1472395158.tcloudbaseapp.com/"
+)
 PUBLISH_PARENT = Path(os.environ.get("LOCALAPPDATA", ROOT)) / "XiaomanFlowerPublisher"
 PUBLISH_REPO = PUBLISH_PARENT / "repo"
+CLOUDBASE_DEPLOY_DIR = PUBLISH_PARENT / "cloudbase-site"
+WEB_FILES = ("index.html", "styles.css", "app.js", "catalog.json")
 SYNC_FILES = (
     ".gitignore",
     ".nojekyll",
@@ -39,6 +45,7 @@ def run(
     cwd: Path | None = None,
     capture: bool = False,
     check: bool = True,
+    env: dict[str, str] | None = None,
 ) -> str:
     result = subprocess.run(
         command,
@@ -48,6 +55,7 @@ def run(
         encoding="utf-8",
         errors="replace",
         capture_output=capture,
+        env=env,
     )
     return result.stdout.strip() if capture else ""
 
@@ -111,6 +119,77 @@ def copy_site_files() -> None:
             shutil.copy2(item, target_images / item.name)
 
 
+def prepare_cloudbase_site() -> None:
+    CLOUDBASE_DEPLOY_DIR.mkdir(parents=True, exist_ok=True)
+    for relative in WEB_FILES:
+        source = ROOT / relative
+        if not source.is_file() or source.is_symlink():
+            raise RuntimeError(f"缺少腾讯云发布文件：{relative}")
+        shutil.copy2(source, CLOUDBASE_DEPLOY_DIR / relative)
+
+    source_images = ROOT / "assets" / "bouquets"
+    target_images = CLOUDBASE_DEPLOY_DIR / "assets" / "bouquets"
+    target_images.mkdir(parents=True, exist_ok=True)
+    source_names = {
+        item.name
+        for item in source_images.iterdir()
+        if item.is_file() and not item.is_symlink()
+    }
+    for item in target_images.iterdir():
+        if item.is_file() and not item.is_symlink() and item.name not in source_names:
+            item.unlink()
+    for item in source_images.iterdir():
+        if item.is_file() and not item.is_symlink():
+            shutil.copy2(item, target_images / item.name)
+
+
+def cloudbase_cli_command() -> tuple[list[str], dict[str, str]]:
+    bundled_root = (
+        Path.home()
+        / ".cache"
+        / "codex-runtimes"
+        / "codex-primary-runtime"
+        / "dependencies"
+    )
+    pnpm_candidates = (
+        Path(shutil.which("pnpm.cmd") or shutil.which("pnpm") or ""),
+        bundled_root / "bin" / "fallback" / "pnpm.cmd",
+    )
+    pnpm = next((item for item in pnpm_candidates if item.is_file()), None)
+    if pnpm is None:
+        raise RuntimeError("没有找到腾讯云发布工具，请联系 Codex 处理。")
+
+    command_env = os.environ.copy()
+    bundled_node_dir = bundled_root / "node" / "bin"
+    if (bundled_node_dir / "node.exe").is_file():
+        command_env["PATH"] = str(bundled_node_dir) + os.pathsep + command_env.get(
+            "PATH", ""
+        )
+    command = [
+        str(pnpm),
+        "--package=@cloudbase/cli",
+        "dlx",
+        "tcb",
+        "hosting",
+        "deploy",
+        str(CLOUDBASE_DEPLOY_DIR),
+        "-e",
+        CLOUDBASE_ENV_ID,
+        "--concurrency",
+        "5",
+        "--retry-count",
+        "5",
+    ]
+    return command, command_env
+
+
+def deploy_to_cloudbase() -> None:
+    prepare_cloudbase_site()
+    command, command_env = cloudbase_cli_command()
+    print("正在发布到腾讯云主站……")
+    run(command, cwd=ROOT, env=command_env)
+
+
 def commit_and_push() -> bool:
     git("add", "--", *SYNC_FILES, "assets/bouquets")
     if not git("status", "--porcelain", capture=True):
@@ -129,15 +208,19 @@ def commit_and_push() -> bool:
     return True
 
 
-def wait_for_public_update(timeout_seconds: int = 150) -> bool:
+def wait_for_public_update(
+    public_url: str,
+    site_name: str,
+    timeout_seconds: int = 150,
+) -> bool:
     with (ROOT / "catalog.json").open("r", encoding="utf-8") as handle:
         expected_updated_at = json.load(handle).get("updatedAt")
-    print("正在等待公网网站刷新，请不要关闭这个窗口……")
+    print(f"正在等待{site_name}刷新，请不要关闭这个窗口……")
     deadline = time.monotonic() + timeout_seconds
     attempts = 0
     while time.monotonic() < deadline:
         attempts += 1
-        url = PUBLIC_URL + f"catalog.json?v={int(time.time() * 1000)}"
+        url = public_url + f"catalog.json?v={int(time.time() * 1000)}"
         try:
             request = urllib.request.Request(
                 url,
@@ -146,12 +229,12 @@ def wait_for_public_update(timeout_seconds: int = 150) -> bool:
             with urllib.request.urlopen(request, timeout=15) as response:
                 public_catalog = json.loads(response.read().decode("utf-8"))
             if public_catalog.get("updatedAt") == expected_updated_at:
-                print("公网网站已确认更新完成。")
+                print(f"{site_name}已确认更新完成。")
                 return True
         except Exception:  # noqa: BLE001
             pass
         if attempts % 4 == 0:
-            print("仍在等待 GitHub Pages 构建……")
+            print(f"仍在等待{site_name}更新……")
         time.sleep(5)
     print("公网构建时间较长，稍后刷新页面即可看到新版。")
     return False
@@ -165,10 +248,17 @@ def main() -> int:
         copy_site_files()
         changed = commit_and_push()
         if changed:
-            print("\n文件推送成功！")
-            print(PUBLIC_URL)
-            wait_for_public_update()
-        webbrowser.open(PUBLIC_URL + f"?v={int(time.time())}")
+            print("\nGitHub 备份推送成功！")
+            print(GITHUB_PUBLIC_URL)
+
+        deploy_to_cloudbase()
+        print("\n腾讯云主站发布成功！")
+        print(CLOUDBASE_PUBLIC_URL)
+        wait_for_public_update(CLOUDBASE_PUBLIC_URL, "腾讯云主站", 90)
+        webbrowser.open(CLOUDBASE_PUBLIC_URL + f"?v={int(time.time())}")
+
+        if changed:
+            wait_for_public_update(GITHUB_PUBLIC_URL, "GitHub 备份", 150)
         return 0
     except FileNotFoundError:
         print("\n发布失败：没有找到 Git，请联系 Codex。")
