@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20260821-filters" />
+  <link rel="stylesheet" href="styles.css?v=20260821-peony-cover" />
 </head>
 <body>
   <div class="paper-grain" aria-hidden="true"></div>
@@ -29,15 +29,18 @@
   </header>
 
   <main id="top">
-    <section class="hero">
-      <div class="hero-kicker">XIAOMAN · CHONGQING</div>
-      <h1>小得盈满，<br /><em>爱逢其时</em></h1>
-      <p>这里不急着定义风格。留下此刻喜欢的花束，<br class="desktop-only" />也允许自己随时改变主意。</p>
-      <div class="hero-meta">
-        <span id="bouquetCount">0 款花束</span>
-        <span class="meta-line"></span>
-        <span>持续更新</span>
-      </div>
+    <section class="hero hero-cover" aria-label="小满 flower 芍药主题封面">
+      <a class="hero-cover-link" href="#catalogTitle" aria-label="浏览花束">
+        <img
+          class="hero-cover-image"
+          src="assets/xiaoman-peony-cover.png"
+          alt="小满 flower 芍药主题封面，小得盈满，爱逢其时"
+          width="853"
+          height="1844"
+          fetchpriority="high"
+        />
+      </a>
+      <span class="visually-hidden" id="bouquetCount">0 款花束</span>
     </section>
 
     <section class="catalog-section" aria-labelledby="catalogTitle">
@@ -227,6 +230,6 @@
   </dialog>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="app.js?v=20260821-filters"></script>
+  <script src="app.js?v=20260821-peony-cover-2"></script>
 </body>
 </html>

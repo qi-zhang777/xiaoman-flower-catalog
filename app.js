@@ -78,7 +78,8 @@ const state = {
   flowerFilter: "all",
   search: "",
   isManaging: false,
-  localManager: ["localhost", "127.0.0.1"].includes(location.hostname),
+  localManager: ["localhost", "127.0.0.1"].includes(location.hostname)
+    && !new URLSearchParams(location.search).has("public"),
   pendingImage: ""
 };
 

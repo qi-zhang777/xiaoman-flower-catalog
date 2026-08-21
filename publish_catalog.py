@@ -24,7 +24,13 @@ CLOUDBASE_PUBLIC_URL = (
 PUBLISH_PARENT = Path(os.environ.get("LOCALAPPDATA", ROOT)) / "XiaomanFlowerPublisher"
 PUBLISH_REPO = PUBLISH_PARENT / "repo"
 CLOUDBASE_DEPLOY_DIR = PUBLISH_PARENT / "cloudbase-site"
-WEB_FILES = ("index.html", "styles.css", "app.js", "catalog.json")
+WEB_FILES = (
+    "index.html",
+    "styles.css",
+    "app.js",
+    "catalog.json",
+    "assets/xiaoman-peony-cover.png",
+)
 SYNC_FILES = (
     ".gitignore",
     ".nojekyll",
@@ -33,6 +39,7 @@ SYNC_FILES = (
     "styles.css",
     "app.js",
     "catalog.json",
+    "assets/xiaoman-peony-cover.png",
     "catalog_manager.py",
     "编辑图册.cmd",
     "publish_catalog.py",
@@ -125,7 +132,9 @@ def prepare_cloudbase_site() -> None:
         source = ROOT / relative
         if not source.is_file() or source.is_symlink():
             raise RuntimeError(f"缺少腾讯云发布文件：{relative}")
-        shutil.copy2(source, CLOUDBASE_DEPLOY_DIR / relative)
+        destination = CLOUDBASE_DEPLOY_DIR / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, destination)
 
     source_images = ROOT / "assets" / "bouquets"
     target_images = CLOUDBASE_DEPLOY_DIR / "assets" / "bouquets"
