@@ -1,5 +1,30 @@
 const FAVORITES_KEY = "xiaoman-flower-favorites";
 
+const COLOR_FILTERS = {
+  pink: ["粉", "奶油粉"],
+  white: ["白", "奶白"],
+  red: ["红", "玫红", "黑红"],
+  yellow: ["黄", "橙", "香槟"],
+  blue: ["蓝"],
+  purple: ["紫"],
+  green: ["绿"],
+  mixed: ["彩色", "混合", "多巴胺"]
+};
+
+const FLOWER_FILTERS = {
+  rose: ["玫瑰", "仙子之吻", "草莓杏仁饼", "凯瑟琳", "曼塔", "粉荔枝", "红蕾丝", "弗洛伊德"],
+  lily: ["百合"],
+  hydrangea: ["绣球"],
+  peony: ["芍药"],
+  tulip: ["郁金香"],
+  orchid: ["蝴蝶兰", "文心兰"],
+  eustoma: ["洋桔梗", "桔梗"],
+  dahlia: ["大丽花"],
+  gladiolus: ["剑兰"],
+  gerbera: ["弗朗"],
+  carnation: ["康乃馨"]
+};
+
 const demoBouquets = [
   {
     id: "demo-1",
@@ -49,6 +74,8 @@ const state = {
   bouquets: [],
   favorites: new Set(JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]")),
   activeFilter: "all",
+  colorFilter: "all",
+  flowerFilter: "all",
   search: "",
   isManaging: false,
   localManager: ["localhost", "127.0.0.1"].includes(location.hostname),
@@ -113,6 +140,28 @@ function priceLabel(item) {
   return `¥${price}`;
 }
 
+function filterText(item) {
+  return [
+    item.name,
+    item.subtitle,
+    item.description,
+    item.sourceCaption,
+    ...(item.tags || [])
+  ].filter(Boolean).join(" ").toLowerCase();
+}
+
+function includesAny(text, terms = []) {
+  return terms.some((term) => text.includes(term.toLowerCase()));
+}
+
+function matchesFlowerFilter(text) {
+  if (state.flowerFilter === "all") return true;
+  if (state.flowerFilter === "other") {
+    return !Object.values(FLOWER_FILTERS).some((terms) => includesAny(text, terms));
+  }
+  return includesAny(text, FLOWER_FILTERS[state.flowerFilter]);
+}
+
 function filteredBouquets() {
   return state.bouquets.filter((item) => {
     if (!state.isManaging && !item.visible) return false;
@@ -121,7 +170,9 @@ function filteredBouquets() {
     if (state.activeFilter === "200to399" && (!hasKnownPrice || item.price < 200 || item.price >= 400)) return false;
     if (state.activeFilter === "over400" && (!hasKnownPrice || item.price < 400)) return false;
     if (state.activeFilter === "favorite" && !state.favorites.has(item.id)) return false;
-    const haystack = [item.name, item.subtitle, item.description, ...(item.tags || [])].join(" ").toLowerCase();
+    const haystack = filterText(item);
+    if (state.colorFilter !== "all" && !includesAny(haystack, COLOR_FILTERS[state.colorFilter])) return false;
+    if (!matchesFlowerFilter(haystack)) return false;
     return haystack.includes(state.search.toLowerCase().trim());
   });
 }
@@ -381,6 +432,16 @@ $("#filters").addEventListener("click", (event) => {
 
 $("#searchInput").addEventListener("input", (event) => {
   state.search = event.target.value;
+  render();
+});
+
+$("#colorFilter").addEventListener("change", (event) => {
+  state.colorFilter = event.target.value;
+  render();
+});
+
+$("#flowerFilter").addEventListener("change", (event) => {
+  state.flowerFilter = event.target.value;
   render();
 });
 

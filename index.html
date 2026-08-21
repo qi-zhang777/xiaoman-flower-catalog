@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20260821-3col" />
+  <link rel="stylesheet" href="styles.css?v=20260821-filters" />
 </head>
 <body>
   <div class="paper-grain" aria-hidden="true"></div>
@@ -52,12 +52,50 @@
         </label>
       </div>
 
-      <div class="filters" id="filters" aria-label="筛选花束">
-        <button class="filter-chip active" data-filter="all" type="button">全部</button>
-        <button class="filter-chip" data-filter="under200" type="button">¥200 以下</button>
-        <button class="filter-chip" data-filter="200to399" type="button">¥200–399</button>
-        <button class="filter-chip" data-filter="over400" type="button">¥400 以上</button>
-        <button class="filter-chip" data-filter="favorite" type="button">我的喜欢</button>
+      <div class="filter-toolbar">
+        <div class="filters" id="filters" aria-label="价格与收藏筛选">
+          <button class="filter-chip active" data-filter="all" type="button">全部价格</button>
+          <button class="filter-chip" data-filter="under200" type="button">¥200 以下</button>
+          <button class="filter-chip" data-filter="200to399" type="button">¥200–399</button>
+          <button class="filter-chip" data-filter="over400" type="button">¥400 以上</button>
+          <button class="filter-chip" data-filter="favorite" type="button">我的喜欢</button>
+        </div>
+
+        <div class="attribute-filters" aria-label="颜色与花材筛选">
+          <label class="filter-select">
+            <span>颜色</span>
+            <select id="colorFilter">
+              <option value="all">全部颜色</option>
+              <option value="pink">粉色系</option>
+              <option value="white">白色系</option>
+              <option value="red">红色系</option>
+              <option value="yellow">橙黄色系</option>
+              <option value="blue">蓝色系</option>
+              <option value="purple">紫色系</option>
+              <option value="green">绿色系</option>
+              <option value="mixed">彩色 / 混合</option>
+            </select>
+          </label>
+
+          <label class="filter-select">
+            <span>花材</span>
+            <select id="flowerFilter">
+              <option value="all">全部品种</option>
+              <option value="rose">玫瑰</option>
+              <option value="lily">百合</option>
+              <option value="hydrangea">绣球</option>
+              <option value="peony">芍药</option>
+              <option value="tulip">郁金香</option>
+              <option value="orchid">兰花</option>
+              <option value="eustoma">洋桔梗</option>
+              <option value="dahlia">大丽花</option>
+              <option value="gladiolus">剑兰</option>
+              <option value="gerbera">弗朗</option>
+              <option value="carnation">康乃馨</option>
+              <option value="other">其他花材</option>
+            </select>
+          </label>
+        </div>
       </div>
 
       <div class="catalog-grid" id="catalogGrid"></div>
@@ -189,6 +227,6 @@
   </dialog>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="app.js"></script>
+  <script src="app.js?v=20260821-filters"></script>
 </body>
 </html>
