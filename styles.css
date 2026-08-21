@@ -106,14 +106,37 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .hero-cover::before, .hero-cover::after { content: none; }
 .hero-cover-link {
-  display: block;
-  width: auto;
-  height: clamp(660px, calc(100svh - 162px), 920px);
+  display: flex;
+  width: min(1860px, calc(100% - 80px));
+  height: auto;
+  aspect-ratio: 1.893 / 1;
+  overflow: hidden;
   line-height: 0;
   cursor: pointer;
+  box-shadow: 0 28px 70px rgba(70, 74, 64, .09);
+}
+.hero-cover-link::before,
+.hero-cover-link::after {
+  content: "";
+  display: block;
+  flex: 0 0 auto;
+  height: 100%;
+  background-image: url("assets/xiaoman-peony-cover.png");
+  background-repeat: no-repeat;
+}
+.hero-cover-link::before {
+  width: 42.5%;
+  background-size: 100% auto;
+  background-position: center top;
+}
+.hero-cover-link::after {
+  width: 57.5%;
+  background-size: 100% auto;
+  background-position: center bottom;
+  border-left: 1px solid rgba(102, 120, 102, .12);
 }
 .hero-cover-image {
-  display: block;
+  display: none;
   width: auto;
   height: 100%;
   max-width: 100%;
@@ -253,8 +276,16 @@ footer { background: var(--ink); color: rgba(255,255,255,.56); min-height: 120px
     padding: 0;
     display: block;
   }
-  .hero-cover-link { width: 100%; height: auto; }
-  .hero-cover-image { width: 100%; height: auto; max-width: none; }
+  .hero-cover-link {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    overflow: visible;
+    box-shadow: none;
+  }
+  .hero-cover-link::before, .hero-cover-link::after { content: none; }
+  .hero-cover-image { display: block; width: 100%; height: auto; max-width: none; }
   .catalog-section { padding-top: 76px; padding-bottom: 90px; }
   .catalog-heading { display: grid; }
   .search-box { width: 100%; }
