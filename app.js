@@ -167,9 +167,11 @@ function filteredBouquets() {
   return state.bouquets.filter((item) => {
     if (!state.isManaging && !item.visible) return false;
     const hasKnownPrice = item.priceType !== "ask";
-    if (state.activeFilter === "under200" && (!hasKnownPrice || item.price >= 200)) return false;
-    if (state.activeFilter === "200to399" && (!hasKnownPrice || item.price < 200 || item.price >= 400)) return false;
-    if (state.activeFilter === "over400" && (!hasKnownPrice || item.price < 400)) return false;
+    if (state.activeFilter === "under100" && (!hasKnownPrice || item.price > 100)) return false;
+    if (state.activeFilter === "100to150" && (!hasKnownPrice || item.price <= 100 || item.price > 150)) return false;
+    if (state.activeFilter === "150to200" && (!hasKnownPrice || item.price <= 150 || item.price > 200)) return false;
+    if (state.activeFilter === "200to500" && (!hasKnownPrice || item.price <= 200 || item.price > 500)) return false;
+    if (state.activeFilter === "over500" && (!hasKnownPrice || item.price <= 500)) return false;
     if (state.activeFilter === "favorite" && !state.favorites.has(item.id)) return false;
     const haystack = filterText(item);
     if (state.colorFilter !== "all" && !includesAny(haystack, COLOR_FILTERS[state.colorFilter])) return false;
