@@ -133,14 +133,6 @@ function escapeHtml(value = "") {
     .replaceAll("'", "&#039;");
 }
 
-function priceLabel(item) {
-  const price = Number(item.price || 0);
-  if (item.priceType === "ask") return "价格咨询";
-  if (item.priceType === "range" && item.maxPrice) return `¥${price}–${Number(item.maxPrice)}`;
-  if (item.priceType === "from") return `¥${price} 起`;
-  return `¥${price}`;
-}
-
 function filterText(item) {
   return [
     item.name,
@@ -203,7 +195,6 @@ function render() {
           <h3>${escapeHtml(item.name)}</h3>
           <p>${escapeHtml(item.subtitle || "一束正在被记录的花")}</p>
         </div>
-        <div class="card-price">${priceLabel(item)}</div>
       </div>
       ${(item.tags || []).length ? `<div class="card-tags">${item.tags.slice(0, 4).map((tag) => `<span class="card-tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
       ${state.isManaging ? `
@@ -322,10 +313,9 @@ function showDetail(item) {
         <p class="section-number">BOUQUET DETAIL</p>
         <h2>${escapeHtml(item.name)}</h2>
         <p class="detail-subtitle">${escapeHtml(item.subtitle || "一束正在被记录的花")}</p>
-        <div class="detail-price">${priceLabel(item)}</div>
         <p class="detail-description">${escapeHtml(item.description || "花材会随季节变化，具体细节可以在预订时沟通。")}</p>
         <div class="detail-tags">${(item.tags || []).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
-        <p class="detail-note">鲜花为自然材料，色彩与形态会有轻微差异。图册价格为参考，最终以当日花材为准。</p>
+        <p class="detail-note">鲜花为自然材料，色彩与形态会有轻微差异。具体花材与预算可以在预订时沟通。</p>
       </div>
     </div>`;
   detailDialog.showModal();
